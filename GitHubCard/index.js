@@ -1,7 +1,6 @@
-/* Step 1: using axios, send a GET request to the following URL 
-           (replacing the palceholder with your Github name):
-           https://api.github.com/users/<your name>
-*/
+
+axios.get('https://api.github.com/users/Jacquelineomollo');
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -35,7 +34,7 @@ const followersArray = [];
     <h3 class="name">{users name}</h3>
     <p class="username">{users user name}</p>
     <p>Location: {users location}</p>
-    <p>Profile:  
+    <p>Profile:
       <a href={address to users github page}>{address to users github page}</a>
     </p>
     <p>Followers: {users followers count}</p>
@@ -45,8 +44,16 @@ const followersArray = [];
 </div>
 
 */
+function gitCards(myData) {
+  let myCards = document.createElement('div');
+  myCards.textContent.myData;
+  myCards.classList.add('div');
 
-/* List of LS Instructors Github username's: 
+
+}
+return myCards;
+
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
