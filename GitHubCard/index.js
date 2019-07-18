@@ -1,6 +1,10 @@
 
-axios.get('https://api.github.com/users/Jacquelineomollo');
 
+
+axios.get('https://api.github.com/users/Jacquelineomollo');
+const yourPromise = new Promise((resolve, reject) => {
+
+})
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -13,17 +17,24 @@ axios.get('https://api.github.com/users/Jacquelineomollo');
            create a new component and add it to the DOM as a child of .cards
 */
 
-/* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
-          , manually find some other users' github handles, or use the list found 
-          at the bottom of the page. Get at least 5 different Github usernames and add them as
-          Individual strings to the friendsArray below.
-          
-          Using that array, iterate over it, requesting data for each user, creating a new card for each
-          user, and adding that card to the DOM.
+
+
+
+
+/*         Using that array, iterate over it, requesting data for each user, creating a new card for each
+         user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  "https://api.github.com/users/tetondan",
+  "https://api.github.com/users/dustinmyers",
+  "https://api.github.com/users/justsml",
+  "https://api.github.com/users/luishrd",
+  "https://api.github.com/users/bigknell",
+];
+function lsCards(Instuctors) {
+
+}
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -44,19 +55,52 @@ const followersArray = [];
 </div>
 
 */
+const cards = document.querySelector('.cards');
+
 function gitCards(myData) {
-  let myCards = document.createElement('div');
-  myCards.textContent.myData;
-  myCards.classList.add('div');
+  const card = document.createElement('div');
+  const image = document.createElement('img')
+  const card_info = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const link = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  card.appendChild('card');
+  image.appendChild('avatar_url');
+  card_info.appendChild('card-info');
+  name.appendChild('name');
+  username.appendChild('username');
+  location.appendChild('location');
+  profile.appendChild('profile');
+  link.appendChild('a');
+  followers.appendChild('followers');
+  following.appendChild('following')
+  bio.appendChild('bio');
+
+
+  image.textContent = myData.image;
+  name.textContent = myData.name;
+  username.textContent = myData.username;
+  location.textContent = myData.location;
+  profile.textContent = "Profile:  ";
+  link.textContent = myData.data.login;
+  followers.textContent = myData.followers_url;
+  following.textContent = myData.following_url;
+
+
+  card.classList.add('card');
+  image.src.classList.add('.card img');
+  link.classList.add('');
+
+
 
 
 }
-return myCards;
+return card;
 
-/* List of LS Instructors Github username's:
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
+
