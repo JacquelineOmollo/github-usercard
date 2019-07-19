@@ -1,61 +1,57 @@
 
 
 
-axios.get('https://api.github.com/users/Jacquelineomollo');
-const yourPromise = new Promise((resolve, reject) => {
-
-})
-
-/* Step 2: Inspect and study the data coming back, this is YOUR 
-   github info! You will need to understand the structure of this 
-   data in order to use it to build your component function 
-
-   Skip to Step 3.
-*/
-
-/* Step 4: Pass the data received from Github into your function, 
-           create a new component and add it to the DOM as a child of .cards
-*/
+axios.get('https://api.github.com/users/Jacquelineomollo')
+  .then(reponse => {
+    console.log('Success! ', reponse);
+    const cards = document.querySelector('.cards');
+    cards.appendChild(gitCards(reponse.reponse));
+  })
+  .catch(error => {
+    console.log('error: ', error);
+  })
 
 
+const followersArray = [];
+axios.get('https://api.github.com/users/Jacquelineomollo/followers')
+  .then(data => {
+    console.log('You got it! Your followers are displayed:', data.data);
+    const followersData = data.data;
+    followersData.forEach(followersArray => {
+      followersArray.push(followersData.login);
 
+    })
 
+    followersArray.forEach(follower => {
+      axios.get(`https://api.github.com/users/${follower}`)
+        .then(data => {
+          console.log('Follower info: ', data.data);
+          const newCards = document.querySelector('.cards');
+          newCards.appendChild(gitCards(data.data));
+        })
 
-/*         Using that array, iterate over it, requesting data for each user, creating a new card for each
-         user, and adding that card to the DOM.
-*/
+        .catch(error => {
+          console.log('error: ', error);
+        })
 
-const followersArray = [
-  "https://api.github.com/users/tetondan",
-  "https://api.github.com/users/dustinmyers",
-  "https://api.github.com/users/justsml",
-  "https://api.github.com/users/luishrd",
-  "https://api.github.com/users/bigknell",
-];
-function lsCards(Instuctors) {
+    })
+  })
+/*   <div class="card">
+       <img src={image url of user} />
+       <div class="card-info">
+         <h3 class="name">{users name}</h3>
+         <p class="username">{users user name}</p>
+         <p>Location: {users location}</p>
+         <p>Profile:
+           <a href={address to users github page}>{address to users github page}</a>
+         </p>
+         <p>Followers: {users followers count}</p>
+         <p>Following: {users following count}</p>
+         <p>Bio: {users bio}</p>
+       </div>
+     </div>
+    */
 
-}
-
-/* Step 3: Create a function that accepts a single object as its only argument,
-          Using DOM methods and properties, create a component that will return the following DOM element:
-
-<div class="card">
-  <img src={image url of user} />
-  <div class="card-info">
-    <h3 class="name">{users name}</h3>
-    <p class="username">{users user name}</p>
-    <p>Location: {users location}</p>
-    <p>Profile:
-      <a href={address to users github page}>{address to users github page}</a>
-    </p>
-    <p>Followers: {users followers count}</p>
-    <p>Following: {users following count}</p>
-    <p>Bio: {users bio}</p>
-  </div>
-</div>
-
-*/
-const cards = document.querySelector('.cards');
 
 function gitCards(myData) {
   const card = document.createElement('div');
@@ -70,37 +66,38 @@ function gitCards(myData) {
   const following = document.createElement('p');
   const bio = document.createElement('p');
 
-  card.appendChild('card');
-  image.appendChild('avatar_url');
-  card_info.appendChild('card-info');
-  name.appendChild('name');
-  username.appendChild('username');
-  location.appendChild('location');
-  profile.appendChild('profile');
-  link.appendChild('a');
-  followers.appendChild('followers');
-  following.appendChild('following')
-  bio.appendChild('bio');
-
-
-  image.textContent = myData.image;
-  name.textContent = myData.name;
-  username.textContent = myData.username;
-  location.textContent = myData.location;
-  profile.textContent = "Profile:  ";
-  link.textContent = myData.data.login;
-  followers.textContent = myData.followers_url;
-  following.textContent = myData.following_url;
-
-
   card.classList.add('card');
-  image.src.classList.add('.card img');
-  link.classList.add('');
+  card_info.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
 
 
+  image.textContent = myData.avatar_url;
+  name.textContent = myData.name;
+  username.textContent = myData.login;
+  location.textContent = `Location:  ${myData.location}`;
+  profile.textContent = `Profile:  <a href=${myData.html_url}>${myData.html_url}</a>`;
+  followers.textContent = `Followers: ${myData.followers_url}`;
+  following.textContent = `Following: ${myData.following_url}`;
+  bio.textContent = `Bio: ${myData.bio}`;
 
+
+  card.appendChild(userImg);
+  card_info.appendChild(cardinfo);
+  card_info.appendChild(name);
+  card_info.appendChild(username);
+  card_info.appendChild(location);
+  card_info.appendChild(profile);
+  profile.appendChild(link);
+  card_info.appendChild(followers);
+  card_info.appendChild(following)
+  card_info.appendChild(bio);
+
+
+  return card;
 
 }
-return card;
+
+
 
 
