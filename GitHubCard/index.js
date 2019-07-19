@@ -1,25 +1,24 @@
 
+/// setting up profile
 
-
-axios.get('https://api.github.com/users/Jacquelineomollo')
-  .then(reponse => {
-    console.log('Success! ', reponse);
+axios.get('https://api.github.com/users/JacquelineOmollo')
+  .then(data => {
+    console.log('Success! ', data);
     const cards = document.querySelector('.cards');
-    cards.appendChild(gitCards(reponse.reponse));
+    cards.appendChild(gitCards(data.data));
   })
   .catch(error => {
     console.log('error: ', error);
   })
 
-
+/// Getting Followers
 const followersArray = [];
 axios.get('https://api.github.com/users/Jacquelineomollo/followers')
   .then(data => {
     console.log('You got it! Your followers are displayed:', data.data);
     const followersData = data.data;
-    followersData.forEach(followersArray => {
-      followersArray.push(followersData.login);
-
+    followersData.forEach(followerData => {
+      followersArray.push(followerData.login);
     })
 
     followersArray.forEach(follower => {
@@ -35,6 +34,10 @@ axios.get('https://api.github.com/users/Jacquelineomollo/followers')
         })
 
     })
+  })
+
+  .catch(err => {
+    console.log('There was a problem retrieving your list of followers: ', err);
   })
 /*   <div class="card">
        <img src={image url of user} />
@@ -66,31 +69,32 @@ function gitCards(myData) {
   const following = document.createElement('p');
   const bio = document.createElement('p');
 
+  /// styling cards
   card.classList.add('card');
   card_info.classList.add('card-info');
   name.classList.add('name');
   username.classList.add('username');
 
-
-  image.textContent = myData.avatar_url;
+  /// making the content
+  image.src = myData.avatar_url;
   name.textContent = myData.name;
   username.textContent = myData.login;
   location.textContent = `Location:  ${myData.location}`;
-  profile.textContent = `Profile:  <a href=${myData.html_url}>${myData.html_url}</a>`;
-  followers.textContent = `Followers: ${myData.followers_url}`;
-  following.textContent = `Following: ${myData.following_url}`;
+  link.innerHTML = `Profile:  <a href=${myData.html_url}>${myData.html_url}</a>`;
+  followers.textContent = `Followers: ${myData.followers}`;
+  following.textContent = `Following: ${myData.following}`;
   bio.textContent = `Bio: ${myData.bio}`;
 
-
-  card.appendChild(userImg);
-  card_info.appendChild(cardinfo);
+  ///putting everything together
+  card.appendChild(image);
+  card.appendChild(card_info);
   card_info.appendChild(name);
   card_info.appendChild(username);
   card_info.appendChild(location);
   card_info.appendChild(profile);
   profile.appendChild(link);
   card_info.appendChild(followers);
-  card_info.appendChild(following)
+  card_info.appendChild(following);
   card_info.appendChild(bio);
 
 
